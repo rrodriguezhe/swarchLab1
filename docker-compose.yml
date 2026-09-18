@@ -1,0 +1,20 @@
+services:
+  swarch-mo:
+    build: .
+    ports:
+      - "8080:5000"
+    depends_on:
+      - swarch-db
+    environment:
+      - DATABASE_URL=mysql://root:123@swarch-db/swarch-db
+    volumes:
+      - .:/app
+    restart: on-failure
+
+  swarch-db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: 123
+      MYSQL_DATABASE: swarch-db
+    ports:
+      - "3306:3306"
