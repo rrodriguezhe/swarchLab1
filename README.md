@@ -1,6 +1,6 @@
 # Laboratorio 1 — Diseño Arquitectónico
 
-**Nombre completo:** Raul Felipe Rodríguez Hernández
+Raúl Felipe Rodríguez Hernández
 
 ## Estructura del sistema
 
