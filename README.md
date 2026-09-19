@@ -24,3 +24,58 @@ Usar un motor de base de datos relacional como MySQL asegura que los principios 
 
 5. **Facilidad de desarrollo**
 Flask es un framework de desarrollo bastante sencillo, fácil de usar y de entender, lo cual es importante en caso de que más personas se quisieran unir al equipo de desarrollo en el futuro.
+
+## Cómo ejecutar el sistema
+
+### Prerrequisitos
+
+- Tener instalado [Docker](https://www.docker.com/) y Docker Compose (viene incluido con Docker Desktop en Windows/macOS).
+- Tener [Git](https://git-scm.com/) instalado para clonar el repositorio.
+
+### Pasos
+
+1. **Clonar el repositorio**
+```bash
+   git clone https://github.com/rrodriguezhe/swarchLab1.git
+   cd swarchLab1
+```
+
+2. **Construir y levantar los contenedores**
+```bash
+   docker-compose up --build
+```
+   Este comando construye la imagen del monolito, descarga la imagen de MySQL, y levanta ambos contenedores (`swarch-mo` y `swarch-db`). La primera vez puede tardar varios minutos mientras se instalan las dependencias.
+
+3. **Esperar a que ambos servicios estén listos**
+   En la terminal verás los logs de ambos contenedores. Espera a ver un mensaje similar a:
+
+```
+   swarch-mo-1  |  * Running on all addresses (0.0.0.0)
+   swarch-mo-1  |  * Running on http://127.0.0.1:5000
+```
+   Esto indica que el servidor Flask ya está activo y aceptando conexiones.
+
+4. **Abrir el sistema en el navegador**
+   Ve a [http://localhost:8080](http://localhost:8080). Deberías ver el formulario "Gestor de Calificaciones".
+
+5. **Usar el sistema**
+   - Completa el formulario con nombre del estudiante, asignatura y calificación, y haz clic en "Agregar" para crear un nuevo registro.
+   - Cada registro creado aparece listado debajo del formulario.
+   - Haz clic en "Eliminar" junto a cualquier registro para borrarlo.
+
+6. **(Opcional) Verificar los datos directamente en la base de datos**
+```bash
+   docker exec -it swarch-swarch-db-1 sh
+   mysql -u root -p
+```
+   Contraseña: `123`
+```sql
+   USE swarch-db;
+   SELECT * FROM grades;
+```
+
+7. **Detener el sistema**
+   Presiona `Ctrl+C` en la terminal donde corre `docker-compose`, o desde otra terminal en la carpeta del proyecto:
+```bash
+   docker-compose down
+```
